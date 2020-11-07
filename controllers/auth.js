@@ -2,7 +2,6 @@ const { response } = require("express");
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const { generateJWT } = require("../helpers/jwt");
-const validateFields = require("../middlewares/validate-fields");
 
 
 const createUser = async (req,res = response)=>{
@@ -15,7 +14,7 @@ const createUser = async (req,res = response)=>{
         if(existsEmail){
             return res.status(400).json({
                 ok: false,
-                msg:'Registered email'
+                message:'Registered email'
             })
         }
 
@@ -36,10 +35,9 @@ const createUser = async (req,res = response)=>{
             token
         });
     }catch(error){
-        console.log(error);
         res.status(500).json({
             ok:false,
-            msg:'talk to the administrator'
+            message:'talk to the administrator'
         });
     }
 }
@@ -52,7 +50,7 @@ const loginUser = async (req, res = response) => {
         if(!user){
             return res.status(404).json({
                 ok:false,
-                msg:'Email not found'
+                message:'Email not found'
             });
         }
 
@@ -60,7 +58,7 @@ const loginUser = async (req, res = response) => {
         if(!validPassword){
             return res.status(400).json({
                 ok:false,
-                msg:'Invalid password'
+                message:'Invalid password'
             });
         }
 

@@ -6,26 +6,20 @@ const validateJWT = (req, res, next)=>{
     if(!token){
         return res.status(401).json({
             ok:false,
-            msg: 'There is no token in the request'
+            message: 'There is no token in the request'
         });
     }
 
-    try {
-        
+    try {        
         const {uid} = jwt.verify(token, process.env.JWT_KEY);
-
         req.uid = uid;
-
         next();
     } catch (error) {
         return res.status(401).json({
             ok:false,
-            msg:'Invalid token'
+            message:'Invalid token'
         });
     }
-
-    console.log(token);
-
 }
 
 module.exports = {
